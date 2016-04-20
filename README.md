@@ -1,7 +1,7 @@
 # [INTECH](http://www.intechinfo.fr) - School projects
 
 ## Semester 5
-* [TSC - Tardigrade Security Challenge](https://github.com/PierrickV/TSC_Master)([repo2](https://github.com/PierrickV/TSC_Storage))
+* [TSC - Tardigrade Security Challenge](https://github.com/PierrickV/TSC_Master)([repo2](https://github.com/PierrickV/TSC_Storage)) - The security training community board
 * [Evaluation](https://github.com/PierrickV/INTECH/tree/master/S5) - Firewall, SSL Certificats (PKI), Openvpn,..
 
 ## Semester 4
