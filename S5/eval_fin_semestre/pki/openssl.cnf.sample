@@ -1,0 +1,93 @@
+[ ca ]
+default_ca      = CA_default
+
+[ CA_default ]
+dir             = .
+certs           = /opt/rootpki/ROOT_CBI/certs
+new_certs_dir   = /opt/rootpki/ROOT_CBI/newcerts
+database        = /opt/rootpki/ROOT_CBI/index.txt
+certificate     = /opt/rootpki/ROOT_CBI/ROOT_CBI.pem
+serial          = /opt/rootpki/ROOT_CBI/serial
+private_key     = /opt/rootpki/ROOT_CBI/ROOT_CBI.key
+default_days    = 365
+default_md      = sha1
+preserve        = no
+policy          = policy_match
+
+[ CA_ssl_default ]
+dir             = .
+certs           = /opt/rootpki/ROOT_CBI_G2/certs
+new_certs_dir   = /opt/rootpki/ROOT_CBI_G2/newcerts
+database        = /opt/rootpki/ROOT_CBI_G2/index.txt
+certificate     = /opt/rootpki/ROOT_CBI_G2/ROOT_CBI_G2.pem
+serial          = /opt/rootpki/ROOT_CBI_G2/serial
+private_key     = /opt/rootpki/ROOT_CBI_G2/ROOT_CBI_G2.key
+default_days    = 365
+default_md      = sha1
+preserve        = no
+policy          = policy_match
+
+[ policy_match ]
+countryName             = match
+stateOrProvinceName     = match
+localityName		= match
+organizationName        = match
+organizationalUnitName  = optional
+commonName              = supplied
+emailAddress            = optional
+
+[ req ]
+distinguished_name      = req_distinguished_name
+
+[ req_distinguished_name ]
+countryName                     = FRANCE
+countryName_default             = FR
+stateOrProvinceName             = Province
+stateOrProvinceName_default     = Ile-de-France
+localityName                    = Locality
+localityName_default            = Paris
+organizationName        	    = OrganisationName
+organizationName_default        = CantBreakIt
+commonName                      = Name
+commonName_max                  = 64
+emailAddress                    = example@cantbreakit.fr
+emailAddress_max                = 40
+
+[CA_ROOT]
+nsComment                       = "CA Racine"
+subjectKeyIdentifier            = hash
+authorityKeyIdentifier          = keyid,issuer:always
+basicConstraints                = critical,CA:TRUE,pathlen:1
+keyUsage                        = keyCertSign, cRLSign
+
+[CA_SSL]
+nsComment                       = "CA SSL"
+basicConstraints                = critical,CA:TRUE,pathlen:0
+subjectKeyIdentifier            = hash
+authorityKeyIdentifier          = keyid,issuer:always
+issuerAltName                   = issuer:copy
+keyUsage                        = keyCertSign, cRLSign
+nsCertType                      = sslCA
+
+[SERVER_RSA_SSL]
+nsComment                       = "Certificat Serveur SSL"
+subjectKeyIdentifier            = hash
+authorityKeyIdentifier          = keyid,issuer:always
+issuerAltName                   = issuer:copy
+subjectAltName                  = DNS:www.webserver.com, DNS:www.webserver-bis.com
+basicConstraints                = critical,CA:FALSE
+keyUsage                        = digitalSignature, nonRepudiation, keyEncipherment
+nsCertType                      = server
+extendedKeyUsage                = serverAuth
+
+[CLIENT_RSA_SSL]
+nsComment                       = "Certificat Client SSL"
+subjectKeyIdentifier            = hash
+authorityKeyIdentifier          = keyid,issuer:always
+issuerAltName                   = issuer:copy
+subjectAltName                  = critical,email:copy,email:user-bis@domain.com,email:user-ter@domain.com
+basicConstraints                = critical,CA:FALSE
+keyUsage                        = digitalSignature, nonRepudiation
+nsCertType                      = client
+extendedKeyUsage                = clientAuth
+

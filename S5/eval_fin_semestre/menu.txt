@@ -1,0 +1,98 @@
+Un jour les manchots domineront le monde \o/
+
+                 .88888888:.
+                88888888.88888.
+              .8888888888888888.
+              888888888888888888
+              88' _`88'_  `88888
+              88 88 88 88  88888
+              88_88_::_88_:88888
+              88:::,::,:::::8888
+              88`:::::::::'`8888
+             .88  `::::'    8:88.
+            8888            `8:888.
+          .8888'             `888888.
+         .8888:..  .::.  ...:'8888888:.
+        .8888.'     :'     `'::`88:88888
+       .8888        '         `.888:8888.
+      888:8         .           888:88888
+    .888:88        .:           888:88888:
+    8888888.       ::           88:888888
+    `.::.888.      ::          .88888888
+   .::::::.888.    ::         :::`8888'.:.
+  ::::::::::.888   '         .::::::::::::
+  ::::::::::::.8    '      .:8::::::::::::.
+ .::::::::::::::.        .:888:::::::::::::
+ :::::::::::::::88:.__..:88888:::::::::::'
+  `'.:::::::::::88888888888.88:::::::::'
+        `':::_:' -- '' -'-' `':_::::'`
+
+#----------------------------------------------------------------------------------
+#Outils d'administration du serveur de gestion de clés publique (PKI)
+#----------------------------------------------------------------------------------
+
+Utilisation:
+
+Administration de la PKI
+
+    Création d'une autorité de certification fille:
+    sudo ./master.sh pki add cassl
+
+    Suppression d'une autorité de certification fille:
+    sudo ./master.sh pki del cassl
+
+    Création d'un certificat client ou serveur:
+    sudo ./master.sh pki add cert
+
+    Suppression d'un certificat client ou serveur:
+    sudo ./master.sh pki del cert
+
+Administration du VPN x.509
+
+    Générer des configurations clientes:
+    sudo ./master.sh vpn add conf_client
+
+    Générer la configuration du serveur VPN:
+    sudo ./master.sh vpn add conf_serveur
+
+    Révoker un client:
+    sudo ./master.sh vpn del conf_client
+
+    Supprimer la configuration serveur:
+    sudo ./master.sh vpn del conf_serveur
+
+    Activer la configuration serveur:
+    sudo ./master.sh vpn activate server
+
+    Activer la configuration serveur:
+    sudo ./master.sh vpn activate client_to_client
+
+    Désactiver la configuration serveur:
+    sudo ./master.sh vpn desactivate server
+
+    Désactiver la configuration serveur:
+    sudo ./master.sh vpn desactivate client_to_client
+
+Administration du Firewall
+
+    Ajout d'une régle de redirection et de la régle de filtrage correspondante
+    sudo ./master.sh firewall add redirect <ip dst> <port_dst_ext> <port_dst_int> <proto>
+
+    Suppression d'une régle de redirection et de la régle de filtrage correspondante
+    sudo ./master.sh firewall del redirect <ip dst> <port_dst_ext> <port_dst_int> <proto>
+
+    Ajout d'une régle de filtrage
+    sudo ./master.sh firewall add filtrage <ip src> <ip_dst> <port_src> <port_dst> <proto>
+
+    Suppression d'une régle de filtrage
+    sudo ./master.sh firewall del filtrage <ip src> <ip_dst> <port_src> <port_dst> <proto>
+
+    Activation de la nat
+    sudo ./master.sh firewall nat activate
+
+    Désactivation de la nat
+    sudo ./master.sh firewall nat desactivate
+
+#----------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------
+

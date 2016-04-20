@@ -1,0 +1,97 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 3 (0x3)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=FR, ST=FRANCE, L=Ivry-sur-seine, O=INTECH, OU=ITI13S-SR, CN=INTECH CA/name=EasyRSA/emailAddress=veran@intechinfo.fr
+        Validity
+            Not Before: Jan 26 16:40:15 2016 GMT
+            Not After : Jan 23 16:40:15 2026 GMT
+        Subject: C=FR, ST=FRANCE, L=Ivry-sur-seine, O=INTECH, OU=ITI13S-SR, CN=toto/name=EasyRSA/emailAddress=toto@toto
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:e1:01:d9:2b:f3:ce:0f:0b:0a:0a:c2:24:d4:f7:
+                    d2:66:1c:63:b7:05:de:2b:3f:02:a1:a0:d9:fd:bd:
+                    65:a9:8d:59:d6:9c:e0:41:73:dc:87:86:20:0c:f2:
+                    02:dc:44:12:c3:67:70:6c:3e:de:83:0b:e7:6b:55:
+                    51:b6:fb:69:d0:fc:b7:fc:b2:3c:42:d4:3a:30:14:
+                    17:10:28:95:4a:0c:56:66:26:6b:b2:12:0a:96:0f:
+                    e1:08:16:cd:5e:4e:70:58:5f:10:32:2d:c8:2d:42:
+                    69:f2:ed:96:e1:99:bc:98:ad:09:d4:66:1d:02:55:
+                    06:db:ee:de:94:b5:5f:b6:3b:24:8c:f8:ef:33:9c:
+                    16:4d:74:50:ea:98:1d:f8:65:8c:d3:dc:f3:ee:cf:
+                    f3:2e:8e:07:c1:61:de:4a:28:ca:be:70:2a:4f:a8:
+                    7a:b5:34:1b:fd:bb:c6:8f:7c:72:6a:a4:37:64:2a:
+                    b3:33:d7:63:57:83:51:82:50:af:c2:ac:44:a2:17:
+                    e9:79:a5:25:86:ce:0a:64:ef:ef:ac:ed:55:e6:db:
+                    81:cb:11:ee:9e:98:94:34:87:93:49:39:bc:94:6f:
+                    e4:9c:a5:5e:b0:a1:f9:44:d3:cb:04:fc:72:47:c5:
+                    9c:bc:0d:20:a0:80:b0:49:d1:07:65:48:27:99:26:
+                    8c:1f
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                Easy-RSA Generated Certificate
+            X509v3 Subject Key Identifier: 
+                FC:70:89:65:6E:73:EE:00:31:60:E5:41:CF:28:30:82:51:67:BF:9E
+            X509v3 Authority Key Identifier: 
+                keyid:01:15:A5:7F:A9:34:31:52:56:5E:58:BF:75:48:D3:A7:F5:8D:27:FC
+                DirName:/C=FR/ST=FRANCE/L=Ivry-sur-seine/O=INTECH/OU=ITI13S-SR/CN=INTECH CA/name=EasyRSA/emailAddress=veran@intechinfo.fr
+                serial:82:07:19:27:06:E8:FF:67
+
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication
+            X509v3 Key Usage: 
+                Digital Signature
+            X509v3 Subject Alternative Name: 
+                DNS:toto
+    Signature Algorithm: sha256WithRSAEncryption
+         ae:57:30:dc:bb:71:ff:b8:ff:8d:22:57:ba:bb:45:13:6b:2a:
+         9e:97:41:14:e0:d7:d0:fb:f5:73:f6:6d:fe:8f:62:87:5d:02:
+         aa:0a:30:ea:4d:9c:52:ae:00:94:67:98:f3:09:9d:bf:df:b9:
+         3b:67:e1:81:8b:1c:17:73:e7:3b:93:03:70:3d:a8:32:e8:81:
+         56:5a:97:ff:4d:62:8e:d1:a6:50:f5:73:11:37:92:c9:01:9f:
+         e9:db:32:72:d4:d6:56:90:03:de:84:f2:59:17:a1:4f:45:31:
+         1d:ae:33:61:6e:2a:0e:16:be:6b:23:80:61:d4:22:d7:56:8c:
+         1f:83:b5:bf:90:45:8f:37:8d:b6:08:85:12:95:b8:0c:6e:6d:
+         df:e4:0d:9b:95:f8:8a:af:ff:0b:d4:a4:c4:ef:8d:1d:e8:40:
+         08:7d:fc:af:13:c4:3e:59:40:11:23:7f:31:bc:4b:e2:b2:61:
+         7a:b4:9c:f8:dc:5c:ee:c2:7e:b9:e9:a6:8d:3f:01:10:7e:1d:
+         f0:dd:66:14:e4:12:d2:48:e0:4c:d5:cb:fe:8b:ce:07:f3:3f:
+         ec:fe:3a:5d:96:e5:e6:9b:33:a4:cb:ad:68:ad:4c:93:f9:56:
+         f4:a7:9e:f8:51:8a:93:4b:d5:b6:36:33:50:64:f8:4a:c3:63:
+         79:6f:67:9d
+-----BEGIN CERTIFICATE-----
+MIIFKjCCBBKgAwIBAgIBAzANBgkqhkiG9w0BAQsFADCBpjELMAkGA1UEBhMCRlIx
+DzANBgNVBAgTBkZSQU5DRTEXMBUGA1UEBxMOSXZyeS1zdXItc2VpbmUxDzANBgNV
+BAoTBklOVEVDSDESMBAGA1UECxMJSVRJMTNTLVNSMRIwEAYDVQQDEwlJTlRFQ0gg
+Q0ExEDAOBgNVBCkTB0Vhc3lSU0ExIjAgBgkqhkiG9w0BCQEWE3ZlcmFuQGludGVj
+aGluZm8uZnIwHhcNMTYwMTI2MTY0MDE1WhcNMjYwMTIzMTY0MDE1WjCBlzELMAkG
+A1UEBhMCRlIxDzANBgNVBAgTBkZSQU5DRTEXMBUGA1UEBxMOSXZyeS1zdXItc2Vp
+bmUxDzANBgNVBAoTBklOVEVDSDESMBAGA1UECxMJSVRJMTNTLVNSMQ0wCwYDVQQD
+EwR0b3RvMRAwDgYDVQQpEwdFYXN5UlNBMRgwFgYJKoZIhvcNAQkBFgl0b3RvQHRv
+dG8wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDhAdkr884PCwoKwiTU
+99JmHGO3Bd4rPwKhoNn9vWWpjVnWnOBBc9yHhiAM8gLcRBLDZ3BsPt6DC+drVVG2
++2nQ/Lf8sjxC1DowFBcQKJVKDFZmJmuyEgqWD+EIFs1eTnBYXxAyLcgtQmny7Zbh
+mbyYrQnUZh0CVQbb7t6UtV+2OySM+O8znBZNdFDqmB34ZYzT3PPuz/MujgfBYd5K
+KMq+cCpPqHq1NBv9u8aPfHJqpDdkKrMz12NXg1GCUK/CrESiF+l5pSWGzgpk7++s
+7VXm24HLEe6emJQ0h5NJObyUb+ScpV6woflE08sE/HJHxZy8DSCggLBJ0QdlSCeZ
+JowfAgMBAAGjggFuMIIBajAJBgNVHRMEAjAAMC0GCWCGSAGG+EIBDQQgFh5FYXN5
+LVJTQSBHZW5lcmF0ZWQgQ2VydGlmaWNhdGUwHQYDVR0OBBYEFPxwiWVuc+4AMWDl
+Qc8oMIJRZ7+eMIHbBgNVHSMEgdMwgdCAFAEVpX+pNDFSVl5Yv3VI06f1jSf8oYGs
+pIGpMIGmMQswCQYDVQQGEwJGUjEPMA0GA1UECBMGRlJBTkNFMRcwFQYDVQQHEw5J
+dnJ5LXN1ci1zZWluZTEPMA0GA1UEChMGSU5URUNIMRIwEAYDVQQLEwlJVEkxM1Mt
+U1IxEjAQBgNVBAMTCUlOVEVDSCBDQTEQMA4GA1UEKRMHRWFzeVJTQTEiMCAGCSqG
+SIb3DQEJARYTdmVyYW5AaW50ZWNoaW5mby5mcoIJAIIHGScG6P9nMBMGA1UdJQQM
+MAoGCCsGAQUFBwMCMAsGA1UdDwQEAwIHgDAPBgNVHREECDAGggR0b3RvMA0GCSqG
+SIb3DQEBCwUAA4IBAQCuVzDcu3H/uP+NIle6u0UTayqel0EU4NfQ+/Vz9m3+j2KH
+XQKqCjDqTZxSrgCUZ5jzCZ2/37k7Z+GBixwXc+c7kwNwPagy6IFWWpf/TWKO0aZQ
+9XMRN5LJAZ/p2zJy1NZWkAPehPJZF6FPRTEdrjNhbioOFr5rI4Bh1CLXVowfg7W/
+kEWPN422CIUSlbgMbm3f5A2blfiKr/8L1KTE740d6EAIffyvE8Q+WUARI38xvEvi
+smF6tJz43Fzuwn656aaNPwEQfh3w3WYU5BLSSOBM1cv+i84H8z/s/jpdluXmmzOk
+y61orUyT+Vb0p574UYqTS9W2NjNQZPhKw2N5b2ed
+-----END CERTIFICATE-----

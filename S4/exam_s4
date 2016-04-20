@@ -1,0 +1,81 @@
+#Vous auriez besoin de résoudre quelques soucis de connectivité pour accéder à internet depuis vos serveurs.
+
+/etc/hosts
+127.0.0.1 localhost
+127.0.1.1 examen-s4sr---veran
+
+/etc/resolv.conf
+search openstacklocal
+nameserver 192.168.0.1
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+
+cp /etc/apt/sources.list.old /etc/apt/sources.list 
+
+apt-get update && apt-get upgrade -y
+
+#Compiler depuis les sources le package tcpdump qui vous servira par la suite pour disséquer les paquets produits par les outils de la suite net-snmp. Ci-joint le lien vers la source de tcpdump : http://www.tcpdump.org/release/tcpdump-4.7.4.tar.gz (Attention vous aurez également besoin de compiler certaines de ces dépendances).
+
+#Installation de tcpdump et de ses dépendances
+apt-get install make m4 texinfo texlive flex byacc
+cd /usr/local/src/
+
+wget http://www.tcpdump.org/release/libpcap-1.7.4.tar.gz
+wget http://www.tcpdump.org/release/tcpdump-4.7.4.tar.gz
+tar -xzf tcpdump-4.7.4.tar.gz
+tar -xzf libpcap-1.7.4.tar.gz
+cd libpcap-1.7.4.tar.gz
+./configure;make;make install;make clean
+cd ../tcpdump-4.7.4.tar.gz
+./configure;make;make install;make clean
+
+# Installer nmap et stocker dans un fichier « hosts.list », la liste des hôtes de votre réseau, avec leur IP, mac, OS et nom de machine, et dans un fichier « $ip.services.list » la liste des services qui tournent sur chaque hôtes
+
+apt-get install nmap
+# Ping scan and write into file
+nmap -sn -oN hosts.list 192.168.0.*
+for line in $(sed '/#/d' hosts.list | grep "192.168.0.*" | cut -d ' ' -f5); do nmap -oN $line.services.list -T4 -F $line ; done
+
+
+# Créer le compte utilisateur « operator » avec le mdp « operator » sans utiliser les commandes « useradd » et « adduser », cet utilisateur ne pourra se connecter qu’avec sa clef publique que vous trouverez ci-dessous
+
+mkdir /home/operator/
+mkdir /home/operator/.ssh/
+echo $(operator:x:1000:1000:Ubuntu:/home/operator:/bin/bash)>/etc/passwd
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAjWBl5sYkj7/C84MRmNbVMaqkI1QShhphdZnYGkfrJYbPEZgtIU00aDtR1rAkGiI9ppf2LbxuASmXjsKWoKGDlLPoJU93+XbyOSPe1xi/v77+L2z+/3n/axWp8VWGYe3drMLT5cyqYSMoCWm4igoKrGHfrNgE/dBXN/nfHTU6sTVKtE5r4TPsRhFfW9VbE9gPRxY53TFtLHpyn1QXdPrZnvlP2SER4P2vz0ORzXYxehLdd3szy4smyYfw4GAI87X9hUg64TBMyc5kv3tnw51FzAqVqKDiYeee2n3AIKVc/Gqc52amkiS51I0bMPAfbClIojQmno/0h8iHOK7Z86cBGw== alexkd windows" >> /home/operator/.ssh/authorized_keys
+
+/etc/group
+sudo:x:27:ubuntu,operator
+
+# Faites passer le MTU de votre carte réseau de 1500 à 1200, puis développer un script shell ou perl qui prend en paramètre la taille d’un paquet IP et la MTU de votre carte réseau et indique en combien de fragments le paquet initial sera décomposé avec le FO du dernier fragment.
+
+sudo ifconfig eth0 mtu 1200
+
+Avec tcpdump, capturer dans un fichier au format « pcap » une requête « snmpwalk » éxécuter sur votre machine
+
+apt-get install snmp snmpd
+tcpdump -s 0 port 161 -i lo -w snmp.pcap  | snmpwalk -v1 -c public localhost
+
+
+· Installer une mib et configurer l’agent SNMP pour donner l’accès à une communauté public qui ne pourra exécuter que des lectures de la mib à partir de l’oid « .1.3.6.1.2.1.1 » et une communauté « operator » qui peut lire toute la mib
+apt-get install snmp snmpd
+/etc/snmpd
+agentAddress  udp:127.0.0.1:161
+view   publicCommunity included .1.3.6.1.2.1.1
+
+rocommunity public  default    -V publicCommunity
+rocommunity operator  default
+
+·         Installer un apache permettant d’afficher vos graphes sur une page HTML, configurer votre Apache pour que son log d’accès se trouve dans /var/log/operator/graph.log
+
+
+·         Sur un graphe RRDTOOL ou InfluxDB, affichez :
+o   2 courbes superposées, l’une indiquant  le trafic entrant et l’autre le trafic sortant  de votre carte réseau toutes les minutes (les deux courbes se trouvent sur le même graphe).
+
+snmpget -v 1 -c operator 127.0.0.1 IF-MIB::ifOutOctets.2 | cut -d " " -f 4
+snmpget -v 1 -c operator 127.0.0.1 IF-MIB::ifInOctets.2 | cut -d " " -f 4
+
+
+o   Faites deux autres graphes RRDTOOL ou InfluxDB, l’un indiquant la variation de l’utilisation du processeur toutes les minutes, et l’autres toutes les heures en récupérant l’information d’une source de données unique
+
+

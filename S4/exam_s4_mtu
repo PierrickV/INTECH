@@ -1,0 +1,98 @@
+#!/bin/bash
+#Script qui prend en paramètre la taille du paquet IP à transporter
+#Développer un script shell ou perl qui prend en paramètre la taille d’un paquet IP et la MTU de votre carte réseau et indique en combien de fragments le paquet initial sera décomposé avec le FO du dernier fragment.
+
+
+#Check if user is root
+if [ "$EUID" -ne 0 ]
+  then echo "$0 Should be run as root"
+  exit
+fi
+
+#If thereis no param
+if [ "$#" -eq 0 ] || [ "$1" -eq 0 ]
+  then echo "$0 [taillePaquetInitiale]"
+  exit
+fi
+
+#Initialisation des variables à 0
+MyMTU=0;
+TaillePaquetIP=0;
+MaxTaillePaquetIP=0;
+NombrePaquetIP=0;
+FO=0;
+TailleDernierPaquet=0;
+
+#Initialisation des variables avec leurs vrais valeurs
+MyMTU=$(ifconfig eth0 | grep MTU | cut -d ' ' -f16 | cut -d ':' -f2)
+TaillePaquetIP=$1
+let "MaxTaillePaquetIP=$MyMTU-20"
+
+#Calcul de la taille max d'un paquet IP:
+let "FO = $MaxTaillePaquetIP/8" 
+
+#Oui mais si cela donne un résultat à virgule???
+# Faire une boucle: Si MaxTaillePaquetIP modulo 8 !=0 alors MaxTaillePaquetIP-1 si oui ok
+
+let " Modulo_MaxTaillePaquetIP=$MaxTaillePaquetIP%8 "
+while [ $Modulo_MaxTaillePaquetIP != 0 ]
+do
+        let " MaxTaillePaquetIP=$MaxTaillePaquetIP-1 "
+	let " Modulo_MaxTaillePaquetIP=$MaxTaillePaquetIP%8 "
+	#echo "DEBUG:Modulo_MaxTaillePaquetIP:$Modulo_MaxTaillePaquetIP"
+	#echo "DEBUG:MaxTaillePaquetIP:$MaxTaillePaquetIP"
+done
+
+let "NombrePaquetIP=$TaillePaquetIP/$MaxTaillePaquetIP"
+
+if [ $TaillePaquetIP -gt $MaxTaillePaquetIP ]  #Si la taille du paquet IP est supérieur à la taille Max
+	then
+	let "TailleDernierPaquet=$TaillePaquetIP % $MaxTaillePaquetIP"
+	#echo "DEBUG: La taille du paquet IP est supérieur au MTU-20"
+fi
+
+# Si il y a un paquet incomplet ou s'il n'y a q'un seul paquet
+if  [ $TailleDernierPaquet -gt 0 ]|| [ $TaillePaquetIP -lt $MaxTaillePaquetIP ]
+  then
+	let "NombrePaquetIP=$NombrePaquetIP+1" # Alors NombrePaquetIP+1
+	#echo "DEBUG: L'un des paquets IP est incomplet"
+fi
+
+#Affichage du résultat
+if  [ $NombrePaquetIP -eq 1 ] && [ $TailleDernierPaquet -eq 0 ] # Un seul paquet IP
+	then
+	echo "Il n'y a qu'un paquet IP"
+	echo "Le FO du dernier fragment est donc de 0"
+fi
+
+if [ $NombrePaquetIP -eq 1 ] && [ $TailleDernierPaquet -gt 0 ] # Un paquet IP complet + un non complet
+	then
+	echo "Il y a deux paquet IP dont l'un est incomplet ($TailleDernierPaquet)"
+	echo "Le FO du dernier fragment est de $FO"
+fi
+
+if [ $NombrePaquetIP -gt 1 ] && [ $TailleDernierPaquet -eq 0 ] #Plusieurs paquet IP complet
+
+	then
+	let "FO = $FO*($NombrePaquetIP-1)"
+	echo "Il y a $NombrePaquetIP paquet IP"
+	echo "Le FO du dernier fragment est de $FO"
+fi
+
+if [ $NombrePaquetIP -gt 1 ] && [ $TailleDernierPaquet -gt 0 ] #Plusieurs paquet IP complet + un non complet
+	then
+	let "FO = $FO*($NombrePaquetIP-1)"
+	echo "Il y a plusieurs paquet IP dont un paquet incomplet"
+	echo "Il y a $NombrePaquetIP paquet IP"
+	echo "Le FO du dernier fragment est de $FO"
+fi
+
+#DEBUG---------------------------------------------------
+echo "----------------------------------------------------------"
+#echo "DEBUG:\$1= $1"
+#echo "DEBUG:TaillePaquetIP= $TaillePaquetIP"
+echo "DEBUG:MyMTU= $MyMTU"
+#echo "DEBUG:NombrePaquetIP= $NombrePaquetIP"
+#echo "DEBUG:MaxTaillePaquetIP= $MaxTaillePaquetIP"
+echo "DEBUG:TailleDernierPaquet= $TailleDernierPaquet"
+#DEBUG---------------------------------------------------

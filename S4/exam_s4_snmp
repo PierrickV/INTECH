@@ -1,0 +1,28 @@
+#!/bin/bash
+# Supervision de l'interface eth0
+# Sur un graphe RRDTOOL ou InfluxDB, affichez : 2 courbes superposées, l’une indiquant  le trafic entrant et l’autre le trafic sortant  de votre carte réseau toutes les minutes (les deux courbes se trouvent sur le même graphe).
+#Pour créé la base de données:
+#rrdtool create /var/www/html/rrd/in.rrd --step 60 DS:in:COUNTER:120:U:U RRA:AVERAGE:0.5:1:672
+#rrdtool create /var/www/html/rrd/out.rrd --step 60 DS:out:COUNTER:120:U:U RRA:AVERAGE:0.5:1:672
+DBPath=/var/www/html/rrd
+
+#Mise à jours des variables:
+in=$(snmpget -v 1 -c operator 127.0.0.1 IF-MIB::ifInOctets.2 | cut -d " " -f 4)
+out=$(snmpget -v 1 -c operator 127.0.0.1 IF-MIB::ifOutOctets.2 | cut -d " " -f 4)
+echo "in: $in"
+echo "out: $out"
+
+#Mise à jours de la base de données RRDTool
+rrdtool update $DBPath/in.rrd N:$in
+rrdtool update $DBPath/out.rrd N:$out
+
+#Mise à jours du graph
+rrdtool graph $DBPath/traffic_heure.png --start -3600 --vertical-label bps \
+	DEF:inoctets=$DBPath/in.rrd:in:AVERAGE \
+	DEF:outoctets=$DBPath/out.rrd:out:AVERAGE \
+	CDEF:inbps=inoctets,8,\* \
+	CDEF:outbps=outoctets,8,\* \
+	AREA:inbps#00FF00:"Traffic entrant" \
+	LINE1:outbps#0000FF:"Traffic sortant"
+
+

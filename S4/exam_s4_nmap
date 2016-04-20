@@ -1,0 +1,14 @@
+#!/bin/bash
+# Installer nmap et stocker dans un fichier « hosts.list »,
+# la liste des hôtes de votre #réseau,
+# avec leur IP, mac, OS et nom de machine,
+# et dans un fichier « $ip.services.list »
+# la liste des services qui tournent sur chaque hôtes
+
+if [ "$EUID" -ne 0 ]
+  then echo "$0 Should be run as root"
+  exit
+fi
+
+nmap -sn -oN hosts.list 192.168.0.*
+for line in $(sed '/#/d' hosts.list | grep "192.168.0.*" | cut -d ' ' -f5); do nmap -oN $line.services.list -T4 -A -Pn -P0 -F $line ; done
