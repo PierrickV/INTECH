@@ -1,4 +1,5 @@
-# [INTECH](http://www.intechinfo.fr) - School projects
+[![INTECH Logo](logo_intech.png  "INTECH Logo")](http://www.intechinfo.fr)
+# School projects
 
 ## Semester 5
 * [TSC - Tardigrade Security Challenge](https://github.com/PierrickV/TSC_Master)([repo2](https://github.com/PierrickV/TSC_Storage)) - The security training community board
